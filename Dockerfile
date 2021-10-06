@@ -1,15 +1,15 @@
-#Pull the official base image
+# Pull the official base image
 FROM python:3.9
 
-#set work directory
+# Set work directory
 WORKDIR /code
 
-#set environment variables
+# Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-#install dependencies
+# Install dependencies
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
-#copy project
+# Copy project
 COPY . /code/

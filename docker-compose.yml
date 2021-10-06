@@ -5,10 +5,9 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - MAHIMA=mahima
+      - POSTGRES_DB=os.environ['DATABASE_NAME']
+      - POSTGRES_USER=os.environ['DATABASE_USER']
+      - POSTGRES_PASSWORD=os.environ['DATABASE_PASSWORD']
   web:
     image: web
     build: .
@@ -19,3 +18,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - .env
