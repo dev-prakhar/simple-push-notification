@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# import apps.notification_app.views.views
+from apps.notification_app.views.views import persist_subscriber_data
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('insertdata/', persist_subscriber_data)
 ]
