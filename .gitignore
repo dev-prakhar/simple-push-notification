@@ -3,4 +3,4 @@ data
 .idea
 
 # All files under directory __pycache__
-**/__pycache__
+**/__pycache_?_
