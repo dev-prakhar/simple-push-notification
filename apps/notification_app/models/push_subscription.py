@@ -1,15 +1,9 @@
 from django.db import models
-
-
-status_choices = (
-    ("1", "Active"),
-    ("2", "Expired"),
-    ("3", "Unsubscribed"),
-)
+from apps.notification_app.constants import PushSubscriptionStatus
 
 
 class PushSubscription(models.Model):
-    endpoint = models.URLField(max_length=200)
-    key = models.CharField(max_length=100)
-    auth = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=status_choices)
+    endpoint = models.URLField(max_length=256)
+    key = models.CharField(max_length=128)
+    auth = models.CharField(max_length=128)
+    status = models.CharField(max_length=32, choices=PushSubscriptionStatus.choices, default=PushSubscriptionStatus.ACTIVE)
