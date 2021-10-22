@@ -1,7 +1,7 @@
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.views import APIView
-from apps.notification_app.serializers.push_subscription_serializer import PushSubscriptionSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from ..serializers.push_subscription_serializer import PushSubscriptionSerializer
 
 
 class PushSubscriptionList(APIView):
