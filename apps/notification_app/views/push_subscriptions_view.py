@@ -4,7 +4,7 @@ from rest_framework import status
 from ..serializers.push_subscription_serializer import PushSubscriptionSerializer
 
 
-class PushSubscriptionList(APIView):
+class PushSubscriptionsView(APIView):
     def post(self, request, format=None):
         serializer = PushSubscriptionSerializer(data=request.data)
         if serializer.is_valid():
