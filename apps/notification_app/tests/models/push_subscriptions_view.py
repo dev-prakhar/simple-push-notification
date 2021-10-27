@@ -11,12 +11,14 @@ class PushSubscriptionsViewTestCase(APITestCase):
             'key': 'any_string_value',
             'auth': 'another_string_value'
         }
-        response = self.client.post(url, data, format='json')
+
+        with self.assertNumQueries(1):
+            # 1. Insert subscriber data into DB
+            response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertNumQueries(5)
         self.assertEqual(len(response.data), 5)
-        self.assertEqual(True, 'id' in response.data)
+        self.assertTrue('id' in response.data)
         self.assertEqual(response.data['endpoint'], data['endpoint'])
         self.assertEqual(response.data['key'], data['key'])
         self.assertEqual(response.data['auth'], data['auth'])
@@ -30,15 +32,16 @@ class PushSubscriptionsViewTestCase(APITestCase):
             'auth': 'another_string_value',
             'status': 'expired'
         }
-        response = self.client.post(url, data, format='json')
+        with self.assertNumQueries(1):
+            # Insert subscriber data into DB
+            response = self.client.post(url, data, format='json')
 
         self.assertEqual(len(response.data), 5)
-        self.assertEqual(True, 'id' in response.data)
+        self.assertTrue('id' in response.data)
         self.assertEqual(response.data['endpoint'], data['endpoint'])
         self.assertEqual(response.data['key'], data['key'])
         self.assertEqual(response.data['auth'], data['auth'])
         self.assertEqual(response.data['status'], 'expired')
-
 
     def test_insert_valid_data_with_status_unsubscribed(self):
         url = reverse('push-subscriptions')
@@ -48,10 +51,13 @@ class PushSubscriptionsViewTestCase(APITestCase):
             'auth': 'another_string_value',
             'status': 'unsubscribed'
         }
-        response = self.client.post(url, data, format='json')
+
+        with self.assertNumQueries(1):
+            # Insert subscriber data into DB
+            response = self.client.post(url, data, format='json')
 
         self.assertEqual(len(response.data), 5)
-        self.assertEqual(True, 'id' in response.data)
+        self.assertTrue('id' in response.data)
         self.assertEqual(response.data['endpoint'], data['endpoint'])
         self.assertEqual(response.data['key'], data['key'])
         self.assertEqual(response.data['auth'], data['auth'])
