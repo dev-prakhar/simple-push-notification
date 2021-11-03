@@ -82,6 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'simple_push_notification.wsgi.application'
 
+CELERY_BROKER_URL = 'amqp://rabbitmq'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

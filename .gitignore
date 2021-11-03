@@ -1,6 +1,7 @@
 .DS_Store
 data
 .idea
+.env.local
 
 # All files under directory __pycache__
 **/__pycache__

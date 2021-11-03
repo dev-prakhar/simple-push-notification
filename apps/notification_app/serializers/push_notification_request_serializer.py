@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models.push_notification_request import PushNotificationRequest
+from apps.notification_app.models import PushNotificationRequest
 
 
 class PushNotificationRequestSerializer(serializers.ModelSerializer):
