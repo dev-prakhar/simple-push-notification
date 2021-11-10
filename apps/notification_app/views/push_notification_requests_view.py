@@ -10,7 +10,6 @@ class PushNotificationRequestsView(APIView):
     def post(self, request, format=None):
         serializer = PushNotificationRequestSerializer(data=request.data)
         if serializer.is_valid():
-            # print('inside view data = ', request.data)
-            PushNotificationRequestService().request_to_send_notification(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            request_id = PushNotificationRequestService().request_to_send_notification(serializer.data)
+            return Response(request_id, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

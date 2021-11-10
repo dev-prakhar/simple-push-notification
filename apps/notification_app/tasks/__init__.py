@@ -1,1 +1,1 @@
-from .send_notification import send_notification_task
+from .send_notification_task import send_notification_task

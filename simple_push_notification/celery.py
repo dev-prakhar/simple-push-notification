@@ -6,8 +6,8 @@ from celery import Celery
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'simple_push_notification.settings')
 
 # Creating the app instance here
-app = Celery('simple_pudh_notification')
+app = Celery('simple_push_notification')
 
-# Celery configures iteself from Django settings module
+# Celery configures itself from Django settings module
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
