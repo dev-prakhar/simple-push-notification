@@ -17,7 +17,6 @@ class PushNotificationService:
                                                   notification_dict)
 
     def __get_push_subscription(self, push_subscription_object):
-        # push_subscription_object = PushSubscription.objects.get(id=subscription_id)
         push_subscription_dict = {
             "endpoint": push_subscription_object.endpoint,
             "keys": {

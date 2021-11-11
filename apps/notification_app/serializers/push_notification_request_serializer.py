@@ -16,6 +16,6 @@ class PushNotificationRequestSerializer(serializers.ModelSerializer):
         return value
 
     def validate_notification_id(self, value):
-        if value not in Notification.objects.all().values_list('pk', flat=True):
+        if not Notification.objects.filter(id=value).first():
             raise serializers.ValidationError("invalid notification ID")
         return value
