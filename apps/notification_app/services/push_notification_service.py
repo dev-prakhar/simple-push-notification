@@ -10,7 +10,6 @@ from ..models import PushNotificationRequest, PushSubscription
 class PushNotificationService:
     def send_notification(self, push_notification_request_id):
         push_notification_request_object = PushNotificationRequest.objects.select_related('notification').get(id=push_notification_request_id)
-        # notification_dict = self.__get_notification_content(push_notification_request_id)
         notification_dict = self.__get_notification_content(push_notification_request_object)
 
         for subscription in PushSubscription.objects.all():
