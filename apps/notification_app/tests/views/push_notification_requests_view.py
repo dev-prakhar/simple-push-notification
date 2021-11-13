@@ -27,12 +27,13 @@ class PushNotificationRequestsView(APITestCase):
         url = reverse('push-notification-requests')
         notification_data = Notification.objects.create(title="test title", options={})
         push_notification_request_data = {
-            'status': 'in_progress',
+            'status': 'xyz',
             'notification_id': 1
         }
 
         response = self.client.post(url, push_notification_request_data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        # Status field is ignored
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_insert_request_with_invalid_notification_id(self):
         url = reverse('push-notification-requests')
