@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from apps.notification_app.models import Notification
+from ...models import Notification, PushNotificationRequest
 
 
 class PushNotificationRequestsView(APITestCase):
@@ -21,6 +21,7 @@ class PushNotificationRequestsView(APITestCase):
 
         # Only ID is present in response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIsNotNone(PushNotificationRequest.objects.filter(id=response.data).first)
 
     def test_insert_request_with_status_in_input(self):
         url = reverse('push-notification-requests')

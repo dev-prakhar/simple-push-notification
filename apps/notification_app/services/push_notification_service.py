@@ -9,11 +9,13 @@ from ..models import PushNotificationRequest, PushSubscription
 
 class PushNotificationService:
     def send_notification(self, push_notification_request_id):
-        notification_dict = self.__get_notification_content(push_notification_request_id)
+        push_notification_request_object = PushNotificationRequest.objects.select_related('notification').get(id=push_notification_request_id)
+        # notification_dict = self.__get_notification_content(push_notification_request_id)
+        notification_dict = self.__get_notification_content(push_notification_request_object)
 
         for subscription in PushSubscription.objects.all():
             push_subscription_dict = self.__get_push_subscription(subscription)
-            self.__send_notification_with_webpush(push_notification_request_id, push_subscription_dict,
+            self.__send_notification_with_webpush(push_notification_request_object, push_subscription_dict,
                                                   notification_dict)
 
     def __get_push_subscription(self, push_subscription_object):
@@ -26,17 +28,15 @@ class PushNotificationService:
         }
         return push_subscription_dict
 
-    def __get_notification_content(self, push_notification_request_id):
-        notification_content = PushNotificationRequest.objects.select_related('notification').get(
-            id=push_notification_request_id).notification
+    def __get_notification_content(self, push_notification_request_object):
+        notification_content = push_notification_request_object.notification
         notification_dict = {
             "title": notification_content.title,
             "options": notification_content.options
         }
         return notification_dict
 
-    def __send_notification_with_webpush(self, push_notification_request_id, push_subscription, notification_content):
-        push_notification_request_object = PushNotificationRequest.objects.get(id=push_notification_request_id)
+    def __send_notification_with_webpush(self, push_notification_request_object, push_subscription, notification_content):
         try:
             webpush(
                 push_subscription,

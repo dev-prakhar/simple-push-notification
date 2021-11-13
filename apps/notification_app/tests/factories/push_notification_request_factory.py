@@ -9,5 +9,3 @@ class PushSubscriptionRequestFactory(factory.django.DjangoModelFactory):
         model = PushNotificationRequest
 
     notification_id = factory.SubFactory(NotificationFactory)
-
-        

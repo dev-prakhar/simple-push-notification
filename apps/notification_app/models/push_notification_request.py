@@ -10,4 +10,4 @@ class PushNotificationRequest(models.Model):
     notification = models.ForeignKey(Notification, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f'{str(self.id)} {self.status} {self.notification}'
+        return f'{self.id} {self.status} {self.notification_id}'
