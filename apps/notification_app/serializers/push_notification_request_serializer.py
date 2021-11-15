@@ -8,9 +8,10 @@ class PushNotificationRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PushNotificationRequest
-        fields = ['id', 'notification_id']
+        fields = ['id', 'notification_id', 'status']
+        read_only_fields = ['status']
 
     def validate_notification_id(self, value):
-        if not Notification.objects.filter(id=value).first():
+        if not Notification.objects.filter(id=value).exists():
             raise serializers.ValidationError("invalid notification ID")
         return value

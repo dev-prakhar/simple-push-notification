@@ -4,4 +4,3 @@ djangorestframework==3.12.4
 django-cors-headers==3.10.0
 Celery==5.1.2
 pywebpush==1.14.0
-factory-boy==3.2.1

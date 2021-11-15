@@ -13,15 +13,16 @@ class PushNotificationRequestsView(APITestCase):
             'notification_id': 1
         }
 
-        with self.assertNumQueries(2):
-            # 1. Select first notification from the list of notification objects filtered with id=notfication_id as a
-            # serializer check during PushNotificationRequest object creation
-            # 2. Insert push notification request data into DB
+        with self.assertNumQueries(4):
+            # 1. SELECT (1) AS "a" FROM "notification_app_notification" WHERE "notification_app_notification"."id" = 1 LIMIT 1
+            # 2. Create SAVEPOINT
+            # 3. Insert push notification request data into DB
+            # 4. Release SAVEPOINT
             response = self.client.post(url, push_notification_request_data, format='json')
 
         # Only ID is present in response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIsNotNone(PushNotificationRequest.objects.filter(id=response.data).first)
+        self.assertTrue(PushNotificationRequest.objects.filter(id=response.data).exists())
 
     def test_insert_request_with_status_in_input(self):
         url = reverse('push-notification-requests')
@@ -30,8 +31,14 @@ class PushNotificationRequestsView(APITestCase):
             'status': 'xyz',
             'notification_id': 1
         }
+        with self.assertNumQueries(4):
+            # 1. SELECT (1) AS "a" FROM "notification_app_notification" WHERE "notification_app_notification"."id" = 1 LIMIT 1
+            # 2. Create SAVEPOINT
+            # 3. Insert push notification request data into DB
+            # 4. Release SAVEPOINT
+            response = self.client.post(url, push_notification_request_data, format='json')
 
-        response = self.client.post(url, push_notification_request_data, format='json')
+        # response = self.client.post(url, push_notification_request_data, format='json')
         # Status field is ignored
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -41,5 +48,8 @@ class PushNotificationRequestsView(APITestCase):
         push_notification_request_data = {
             'notification_id': 200
         }
+        with self.assertNumQueries(1):
+            # 1. SELECT (1) AS "a" FROM "notification_app_notification" WHERE "notification_app_notification"."id" = 200 LIMIT 1
+            response = self.client.post(url, push_notification_request_data, format='json')
         response = self.client.post(url, push_notification_request_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

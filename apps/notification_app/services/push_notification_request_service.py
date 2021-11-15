@@ -7,6 +7,7 @@ from ..models import PushNotificationRequest
 
 
 class PushNotificationRequestService:
+    @transaction.atomic
     def request_to_send_notification(self, push_notification_request_data):
         push_notification_request_object = PushNotificationRequest.objects.create(**push_notification_request_data)
         # Send ID of the new request to the celery task
