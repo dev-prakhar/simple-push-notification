@@ -19,7 +19,6 @@ class PushNotificationRequestsView(APITestCase):
             # 3. Insert push notification request data into DB
             # 4. Release SAVEPOINT
             response = self.client.post(url, push_notification_request_data, format='json')
-
         # Only ID is present in response
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(PushNotificationRequest.objects.filter(id=response.data).exists())
@@ -38,7 +37,6 @@ class PushNotificationRequestsView(APITestCase):
             # 4. Release SAVEPOINT
             response = self.client.post(url, push_notification_request_data, format='json')
 
-        # response = self.client.post(url, push_notification_request_data, format='json')
         # Status field is ignored
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
