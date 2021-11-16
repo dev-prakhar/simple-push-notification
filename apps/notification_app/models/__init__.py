@@ -1,2 +1,3 @@
 from .notification import Notification
 from .push_subscription import PushSubscription
+from .push_notification_request import PushNotificationRequest

@@ -82,6 +82,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'simple_push_notification.wsgi.application'
 
+CELERY_BROKER_URL = os.environ.get("RABBITMQ_URL")
+
+VAPID_PRIVATE_KEY = os.environ.get("PRIVATE_VAPID_KEY")
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
