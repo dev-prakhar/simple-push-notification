@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 from django.conf import settings
 from pywebpush import WebPushException
+from rest_framework import status
 from rest_framework.test import APITestCase
 
 from ...models import Notification, PushSubscription, PushNotificationRequest
@@ -65,3 +66,6 @@ class PushNotificationServiceTest(APITestCase):
 
         mock_web_push.side_effect = WebPushException('Test')
         self.assertRaises(WebPushException, mock_web_push)
+
+        mock_web_push.response.status_code = status.HTTP_400_BAD_REQUEST
+        self.assertEqual(mock_web_push.response.status_code, status.HTTP_400_BAD_REQUEST)
